@@ -1,0 +1,5 @@
+# Run the backup script every day at 1 AM
+0 1 * * * /app/backup_pg_databases.sh >> /var/log/cron.log 2>&1
+
+# each 3 mins (for testing)
+# */3 * * * * /app/backup_pg_databases.sh >> /var/log/cron.log 2>&1

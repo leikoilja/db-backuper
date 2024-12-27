@@ -1,0 +1,6 @@
+services:
+  db-backuper:
+    build: .
+    container_name: db-backuper-container
+    volumes:
+      - ./pg_dumps:/app/pg_dumps  # Mount your host backup directory to the container
