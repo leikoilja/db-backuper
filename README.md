@@ -1,17 +1,66 @@
-# DB Backuper
+# 📦 DB Backuper
 
-Backing up databases automatically every night at 1AM.
-Storing dumps on the volume that is mounted to synology where duplicati is picking up changes
+Automatically backup your PostgreSQL databases with ease at your specified schedule. Perfect for ensuring your data is safe and sound! 🛡️
 
-## Building the image and pushing to the registry
+## 📂 What This Does
 
-### Building
+- **Automates Backups**: Set up scheduled backups using cron syntax.
+- **Stores Securely**: Direct where backups are stored on your host.
+- **Cleans Up**: Automatically deletes old backups based on the retention policy you set (`DAYS_TO_KEEP`).
 
-For arm
-`docker build -t registry.gingernest.com/leikoilja/db-backuper:v1 .`
+## 🛠️ Build and Push Your Image
 
-or for amd:
-`docker build --platform linux/amd64 -t registry.gingernest.com/leikoilja/db-backuper:v1 .`
+### 🔨 Building the Image
 
-### Push to the registry
-`docker push registry.gingernest.com/leikoilja/db-backuper:v1`
+- **For ARM Architectures** (e.g., Apple M1/M2):
+
+  ```bash
+  docker build -t registry.gingernest.com/USERNAME/db-backuper:v1 .
+  ```
+
+- **For AMD Architectures**:
+
+  ```bash
+  docker build --platform linux/amd64 -t registry.example.com/USERNAME/db-backuper:v1.2 .
+  ```
+
+### 🚢 Pushing the Image to the Registry
+
+Once your build is complete, push the image to your registry:
+
+```bash
+docker push registry.example.com/USERNAME/db-backuper:v1.2
+```
+
+## 🚀 Quick Start
+
+1. Clone the repo `git clone https://github.com/leikoilja/db-backuper.git`
+2. Copy the `db_urls.example` file and fill in with your own information
+3. Create `docker-compose.yml` file using the following example
+
+```yaml
+services:
+  db-backuper:
+    image: registry.example.com/USERNAME/db-backuper:v1.2
+    container_name: db-backuper
+    restart: unless-stopped
+    volumes:
+      - /homes/USERNAME/Backups/databases:/app/pg_dumps
+      - ./service_files/db_urls.sh:/app/db_urls
+    environment:
+      - DAYS_TO_KEEP=7               # keep backups for 7 days
+      - CRON_SCHEDULE=0 1 * * *     # backup daily at 1 AM
+```
+
+## 📌 Requirements
+
+- Ensure that the file `db_urls.sh` is correctly formatted and accessible.
+- The `/homes/USERNAME/Backups/databases` directory must be writable by Docker.
+
+## 📝 Tips
+
+- Customize your `CRON_SCHEDULE` to adjust the timing of your backups easily.
+- Monitor your backup logs to ensure everything is running smoothly (`/var/log/cron.log` in your container).
+- Review and secure access to your database URLs—these contain sensitive information.
+
+Happy Backing Up! 😊
