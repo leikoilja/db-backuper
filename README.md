@@ -5,5 +5,13 @@ Storing dumps on the volume that is mounted to synology where duplicati is picki
 
 ## Building the image and pushing to the registry
 
-- docker build -t registry.gingernest.com/leikoilja/db-backuper:v1 .
-- docker push registry.gingernest.com/leikoilja/db-backuper:v1
+### Building
+
+For arm
+`docker build -t registry.gingernest.com/leikoilja/db-backuper:v1 .`
+
+or for amd:
+`docker build --platform linux/amd64 -t registry.gingernest.com/leikoilja/db-backuper:v1 .`
+
+### Push to the registry
+`docker push registry.gingernest.com/leikoilja/db-backuper:v1`

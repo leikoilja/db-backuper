@@ -10,6 +10,9 @@ CRONTAB_LINE="$CRON_SCHEDULE /app/backup_pg_databases.sh >> /var/log/cron.log 2>
 # Write out the current crontab and append the new job
 (crontab -l 2>/dev/null; echo "$CRONTAB_LINE") | crontab -
 
+# Run the backup script immediately
+/app/backup_pg_databases.sh
+
 # Start cron service
 cron
 
