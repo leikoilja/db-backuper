@@ -1,19 +1,13 @@
 #!/bin/bash
 
 # PostgreSQL Database Backup Script
-# Format of URLs in the list should be: postgresql://username:password@hostname:port/database_name
 
-# BASE_BACKUP_DIR="/var/services/homes/leikoilja/Backups/databases"
-# URL_LIST="/var/services/homes/leikoilja/Development/scripts/db_backups/pg_db_urls.sh"
-
-# DEV
-BASE_BACKUP_DIR="/app/pg_dumps"  # TODO: change to an absolute path on Synology
-URL_LIST="/app/pg_db_urls.sh"
-
-DAYS_TO_KEEP=7
-TIMESTAMP=$(date +"%Y%m%d%H%M")
-LOG_FILE="./backup.log"
+BASE_BACKUP_DIR="/app/pg_dumps"
+DAYS_TO_KEEP=${DAYS_TO_KEEP:-7}
 EXIT_STATUS=0
+LOG_FILE="./backup.log"
+TIMESTAMP=$(date +"%Y%m%d%H%M")
+URL_LIST="/app/db_urls"
 
 # Create base backup directory if it doesn't exist
 mkdir -p "$BASE_BACKUP_DIR"

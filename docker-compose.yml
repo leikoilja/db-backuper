@@ -4,3 +4,7 @@ services:
     container_name: db-backuper-container
     volumes:
       - ./pg_dumps:/app/pg_dumps  # Mount your host backup directory to the container
+      - ./db_urls.sh:/app/db_urls
+    environment:
+      - DAYS_TO_KEEP=7
+      - CRON_SCHEDULE="0 1 * * *"  # This runs at 1 AM every day

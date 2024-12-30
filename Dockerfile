@@ -9,26 +9,15 @@ RUN apt-get update && \
 # Set working directory
 WORKDIR /app
 
-# Copy your backup script into the container
+# Copy the backup scripts into the container
 COPY backup_pg_databases.sh /app/backup_pg_databases.sh
-
-# Copy your database URL file
-COPY pg_db_urls.sh /app/pg_db_urls.sh
-
-# Ensure the script is executable
-RUN chmod +x /app/backup_pg_databases.sh
-
-# Add crontab file and run the command
-COPY crontab /etc/cron.d/pg_backup_cron
-
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/pg_backup_cron
-
-# Apply the cron job
-RUN crontab /etc/cron.d/pg_backup_cron
 
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
 
-# Start the cron services, and log output
-CMD cron && tail -f /var/log/cron.log
+# Use an entrypoint script to start the container processes
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Use the entrypoint script to execute at container runtime
+CMD ["/app/entrypoint.sh"]
