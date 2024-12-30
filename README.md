@@ -35,7 +35,7 @@ docker push registry.example.com/USERNAME/db-backuper:v1.2
 ## 🚀 Quick Start
 
 1. Clone the repo `git clone https://github.com/leikoilja/db-backuper.git`
-2. Copy the `db_urls.example` file and fill in with your own information
+2. Rename the `db_urls.example` to `my_db_urls` file and fill in with your own information
 3. Create `docker-compose.yml` file using the following example
 
 ```yaml
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
     volumes:
       - /homes/USERNAME/Backups/databases:/app/pg_dumps
-      - ./service_files/db_urls.sh:/app/db_urls
+      - my_db_urls:/app/db_urls
     environment:
       - DAYS_TO_KEEP=7               # keep backups for 7 days
       - CRON_SCHEDULE=0 1 * * *     # backup daily at 1 AM
