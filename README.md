@@ -15,7 +15,7 @@ Automatically backup your PostgreSQL databases with ease at your specified sched
 - **For ARM Architectures** (e.g., Apple M1/M2):
 
   ```bash
-  docker build -t registry.gingernest.com/USERNAME/db-backuper:v1 .
+  docker build -t registry.example.com/USERNAME/db-backuper:v1 .
   ```
 
 - **For AMD Architectures**:
